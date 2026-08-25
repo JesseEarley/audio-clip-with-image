@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+
+.audioClipWithImage {
+  display: grid;
+  grid-template-columns: auto 1fr; 
+  grid-template-rows: 1fr auto; 
+ /* gap: 12px;*/
+  background:#18453b;
+  max-width: 600px;
+  height: auto; 
+  min-height: 0; 
+  overflow: hidden; 
+}
+
+.audioClipWithImage__image {
+  grid-column: 1;
+  grid-row: 1 / span 4;
+  height: 100%;
+  max-height: 100%; 
+  width: auto;
+  object-fit: cover; 
+  display: block; 
+}
+
+.audioClipWithImage__title{
+   grid-column: 2;
+  grid-row: 1;  
+  	padding: 1.5rem .5rem .5rem;
+	font-family: sans-serif;
+	font-size: 1.5rem;
+	color: #7bbd00;
+}
+
+.audioClipWithImage__person{
+  grid-column: 2;
+  grid-row: 2;
+  	font-family: sans-serif;
+	padding: 0 .5rem;
+	color: #fff;
+}
+
+#waveform-container {
+  grid-column: 2;
+  grid-row: 3;
+  min-height: 0; /* Prevents WaveSurfer from pushing height */
+  width: 100%;
+}
+
+.audioClipWithImage__controls {
+  grid-column: 2;
+  grid-row: 4;
+  width: 100%;
+  height: 40px;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="audioClipWithImage">
+    <img class="audioClipWithImage__image" src="image.png" alt="Seth Jacobson" />
+    <div class="audioClipWithImage__title">How to stop an asteroid</div>
+    <div class="audioClipWithImage__person">with Seth Jacobson, Assistant Professor in the Department of Earth and Environmental Sciences</div>
+    <div class="audioClipWithImage__waveformContainer" id="waveform-container"><!--waveform will go here--></div>
+    <audio class="audioClipWithImage__controls" id="my-audio" controls>
+        <source src="mp3.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<script type="module">
+import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js'
+
+const audioElement = document.getElementById('my-audio');
+
+// Initialize WaveSurfer
+const wavesurfer = WaveSurfer.create({
+  container: '#waveform-container',
+  waveColor: '#0B9A6D',
+  progressColor: '#FFFFFF',
+  cursorColor: 'transparent',
+  // Pass the HTMLMediaElement directly here
+  media: audioElement, 
+    // Set a bar width
+  barWidth: 2,
+  // Optionally, specify the spacing between bars
+  barGap: 1,
+  // And the bar radius
+  barRadius: 2,
+});
+</script>
+</body>
+</html>
