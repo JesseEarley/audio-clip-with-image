@@ -96,6 +96,10 @@
        url(https://cdn.jsdelivr.net/fontsource/fonts/metropolis@5.3.0/latin-900-normal.woff) format('woff');
 }
 
+body{
+  font-family: Metropolis;
+}
+
 .audioClipWithImage {
   display: grid;
   grid-template-columns: auto 1fr; 
@@ -110,7 +114,7 @@
 
 .audioClipWithImage__image {
   grid-column: 1;
-  grid-row: 1 / span 4;
+  grid-row: 1 / span 5;
   height: 100%;
   max-height: 100%; 
   width: auto;
@@ -124,7 +128,6 @@
    grid-column: 2;
   grid-row: 1;  
   	padding: 1.5rem .5rem .5rem;
-	font-family: Metropolis;
 	font-size: 1.5rem;
 	color: #7bbd00;
 }
@@ -132,7 +135,6 @@
 .audioClipWithImage__person{
   grid-column: 2;
   grid-row: 2;
-  	font-family: Metropolis;
 	padding: 0 .5rem;
   font-size: .85rem;
 	color: #fff;
@@ -147,9 +149,21 @@
   padding: 0 .5rem;
 }
 
-.audioClipWithImage__controls {
+.audioClipWithImage__transcript{
   grid-column: 2;
   grid-row: 4;
+  width: 100%;
+}
+
+.audioClipWithImage__transcript a {
+	color: #fff;
+	padding: 0 .5rem .5rem;
+	display: block;
+}
+
+.audioClipWithImage__controls {
+  grid-column: 2;
+  grid-row: 5;
   width: 100%;
   height: 40px;
 }
@@ -185,9 +199,14 @@
 	grid-row: 4;
 }
 
-  .audioClipWithImage__controls {
+.audioClipWithImage__transcript{
 	grid-column: 1;
 	grid-row: 5;
+}
+
+  .audioClipWithImage__controls {
+	grid-column: 1;
+	grid-row: 6;
 }
 }
 
@@ -200,6 +219,7 @@
     <div class="audioClipWithImage__title">How to stop an asteroid</div>
     <div class="audioClipWithImage__person">with Seth Jacobson, Assistant Professor in the Department of Earth and Environmental Sciences</div>
     <div class="audioClipWithImage__waveformContainer" id="waveform-container"><!--waveform will go here--></div>
+    <div class="audioClipWithImage__transcript"><a target="_blank" href="#">Download transcript</a></div>
     <audio class="audioClipWithImage__controls" id="my-audio" controls>
         <source src="mp3.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
