@@ -140,7 +140,7 @@ body{
 	color: #fff;
 }
 
-#waveform-container {
+.audioClipWithImage__waveformContainer {
   grid-column: 2;
   grid-row: 3;
   min-height: 0; /* Prevents WaveSurfer from pushing height */
@@ -148,6 +148,7 @@ body{
   box-sizing: border-box;
   padding: 0 .5rem;
 }
+
 
 .audioClipWithImage__transcript{
   grid-column: 2;
@@ -168,44 +169,89 @@ body{
   height: 40px;
 }
 
-@media screen and (max-width: 600px) {
-.audioClipWithImage {
-    grid-template-columns: 1fr;
-      grid-template-rows: repeat(1, 1fr); 
-  }
+.audioClipWithImage.audioClipWithImage-vertical {
+	max-width: 300px;
+}
 
-  .audioClipWithImage__image {
-	grid-column: 1;
+.audioClipWithImage.audioClipWithImage-vertical{
+   grid-template-columns: 1fr;
+      grid-template-rows: repeat(1, 1fr); 
+}
+
+
+.audioClipWithImage.audioClipWithImage-vertical .audioClipWithImage__image{
+  	grid-column: 1;
 	grid-row: 1;
   width: 100%;
 }
 
-  .audioClipWithImage__title {
+.audioClipWithImage.audioClipWithImage-vertical .audioClipWithImage__title {
 	grid-column: 1;
 	grid-row: 2;
 	padding: 1.5rem .5rem .5rem;
-	font-family: Metropolis;
 	font-size: 1.5rem;
 	color: #7bbd00;
 }
 
-  .audioClipWithImage__person {
+
+.audioClipWithImage.audioClipWithImage-vertical  .audioClipWithImage__person {
 	grid-column: 1;
 	grid-row: 3;
 }
 
-  #waveform-container {
+.audioClipWithImage.audioClipWithImage-vertical .audioClipWithImage__waveformContainer {
 	grid-column: 1;
 	grid-row: 4;
 }
 
-.audioClipWithImage__transcript{
+.audioClipWithImage.audioClipWithImage-vertical .audioClipWithImage__transcript{
 	grid-column: 1;
 	grid-row: 5;
 }
 
-  .audioClipWithImage__controls {
+.audioClipWithImage.audioClipWithImage-vertical   .audioClipWithImage__controls {
 	grid-column: 1;
+	grid-row: 6;
+}
+
+@media screen and (max-width: 600px) {
+.audioClipWithImage.audioClipWithImage-horizontal {
+  	max-width: 300px;
+    grid-template-columns: 1fr;
+      grid-template-rows: auto;
+  }
+
+  .audioClipWithImage.audioClipWithImage-horizontal > * {
+    grid-column: 1;
+  }
+
+  .audioClipWithImage.audioClipWithImage-horizontal .audioClipWithImage__image {
+	grid-row: 1;
+  width: 100%;
+  height: auto;     
+  display: block;
+}
+
+  .audioClipWithImage.audioClipWithImage-horizontal .audioClipWithImage__title {
+	grid-row: 2;
+	padding: 1.5rem .5rem .5rem;
+	font-size: 1.5rem;
+	color: #7bbd00;
+}
+
+  .audioClipWithImage.audioClipWithImage-horizontal .audioClipWithImage__person {
+	grid-row: 3;
+  }
+
+.audioClipWithImage.audioClipWithImage-horizontal .audioClipWithImage__waveformContainer {
+	grid-row: 4;
+}
+
+.audioClipWithImage.audioClipWithImage-horizontal .audioClipWithImage__transcript{
+	grid-row: 5;
+}
+
+  .audioClipWithImage.audioClipWithImage-horizontal .audioClipWithImage__controls {
 	grid-row: 6;
 }
 }
@@ -214,13 +260,25 @@ body{
 </head>
 <body>
 
-<div class="audioClipWithImage">
+<div class="audioClipWithImage audioClipWithImage-horizontal">
     <img class="audioClipWithImage__image" src="image.png" alt="Seth Jacobson" />
     <div class="audioClipWithImage__title">How to stop an asteroid</div>
     <div class="audioClipWithImage__person">with Seth Jacobson, Assistant Professor in the Department of Earth and Environmental Sciences</div>
-    <div class="audioClipWithImage__waveformContainer" id="waveform-container"><!--waveform will go here--></div>
+    <div class="audioClipWithImage__waveformContainer" id="waveform-container-0"><!--waveform will go here--></div>
     <div class="audioClipWithImage__transcript"><a target="_blank" href="#">Download transcript</a></div>
     <audio class="audioClipWithImage__controls" id="my-audio" controls>
+        <source src="mp3.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<div class="audioClipWithImage audioClipWithImage-vertical">
+    <img class="audioClipWithImage__image" src="image.png" alt="Seth Jacobson" />
+    <div class="audioClipWithImage__title">How to stop an asteroid</div>
+    <div class="audioClipWithImage__person">with Seth Jacobson, Assistant Professor in the Department of Earth and Environmental Sciences</div>
+    <div class="audioClipWithImage__waveformContainer" id="waveform-container-1"><!--waveform will go here--></div>
+    <div class="audioClipWithImage__transcript"><a target="_blank" href="#">Download transcript</a></div>
+    <audio class="audioClipWithImage__controls" id="my-audio2" controls>
         <source src="mp3.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -229,10 +287,31 @@ body{
 <script type="module">
 import WaveSurfer from 'https://cdn.jsdelivr.net/npm/wavesurfer.js@7/dist/wavesurfer.esm.js'
 
-const audioElement = document.getElementById('my-audio');
+//const audioElement = document.getElementById('my-audio');
+const audioElements = document.querySelectorAll('.audioClipWithImage__controls');
+
+
+
+audioElements.forEach((element, index) => {
+  // Initialize WaveSurfer
+const wavesurfer = WaveSurfer.create({
+  container: `#waveform-container-${index}`,
+  waveColor: '#0B9A6D',
+  progressColor: '#FFFFFF',
+  cursorColor: 'transparent',
+  // Pass the HTMLMediaElement directly here
+  media: element, 
+    // Set a bar width
+  barWidth: 2,
+  // Optionally, specify the spacing between bars
+  barGap: 1,
+  // And the bar radius
+  barRadius: 2,
+});
+});
 
 // Initialize WaveSurfer
-const wavesurfer = WaveSurfer.create({
+/*const wavesurfer = WaveSurfer.create({
   container: '#waveform-container',
   waveColor: '#0B9A6D',
   progressColor: '#FFFFFF',
@@ -245,7 +324,8 @@ const wavesurfer = WaveSurfer.create({
   barGap: 1,
   // And the bar radius
   barRadius: 2,
-});
+});*/
+
 </script>
 </body>
 </html>
